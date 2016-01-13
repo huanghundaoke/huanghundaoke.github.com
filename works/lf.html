@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>立方体</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+		body{
+			background:#CCC;
+		}
+        .cubic{
+            width:200px;
+            height:200px;
+            position: absolute;
+            left: 50%;
+            top:50%;
+            margin: -100px 0 0 -100px;
+
+            transform:perspective(800px) rotateY(-60deg) rotateX(30deg);
+
+            transform-style: preserve-3d;
+
+        }
+        .cubic div{
+            width: 100%;
+            height:100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            border: 1px solid #999;
+            opacity: 0.5;
+            font-size: 50px;
+            font-weight: bolder;
+            font-family: 微软雅黑;
+            text-align: center;
+            line-height: 200px;
+            text-shadow: 0 0 10px #fff;
+        }
+        .front{
+            background:#399;
+            transform: translateZ(100px);
+        }
+        .back{
+            background: #239900;
+            transform: translateZ(-100px);
+        }
+        .left{
+            background: #993287;
+            transform:translateX(-100px) rotateY(90deg);
+        }
+        .top{
+            background: #998399;
+            transform:translateY(-100px) rotateX(90deg);
+        }
+        .bottom{
+            background: #ff7e72;
+            transform:translateY(100px) rotateX(-90deg);
+        }
+        .right{
+            background: #ffe521;
+            transform:translateX(100px) rotateY(90deg);
+        }
+    </style>
+    <script>
+        window.onload=function(){
+            var oBox=document.querySelector('.cubic');
+            var y=-60;
+            var x=30;
+            var bLeft=false,
+                bRight=false,
+                bUp=false,
+                bDown=false;
+            document.onkeydown=function(ev){
+                switch(ev.keyCode){
+                    case 37:
+                        bLeft=true;
+                        break;
+                    case 39:
+                        bRight=true;
+                        break;
+                    case 38:
+                        bUp=true;
+                        break;
+                    case 40:
+                        bDown=true;
+                        break;
+                }
+            };
+            document.onkeyup=function(ev){
+                switch(ev.keyCode){
+                    case 37:
+                        bLeft=false;
+                        break;
+                    case 39:
+                        bRight=false;
+                        break;
+                    case 38:
+                        bUp=false;
+                        break;
+                    case 40:
+                        bDown=false;
+                        break;
+                }
+            };
+            //连续不断走
+            setInterval(function(){
+                if(bLeft){
+                    y-=10;
+                }
+                if(bRight){
+                    y+=10;
+                }
+                if(bUp){
+                    x+=10;
+                }
+                if(bDown){
+                    x-=10;
+                }
+                oBox.style.transform='perspective(800px) rotateY('+y+'deg) rotateX('+x+'deg)';
+            },30);
+        };
+    </script>
+</head>
+<body>
+    <div class="cubic">
+        <div class="front">1</div>
+        <div class="back">2</div>
+        <div class="left">3</div>
+        <div class="top">4</div>
+        <div class="bottom">5</div>
+        <div class="right">6</div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>弧形时钟</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none
+        }
+        body{
+            background: #000;
+        }
+        #c1{
+			position:absolute; 
+			top:50%; 
+			left:50%;
+			margin-left:-250px; 
+			margin-top:-250px;
+            background: #fff;
+        }
+    </style>
+    <script>
+        function d2a(n){
+            return n*Math.PI/180;
+        }
+        window.onload=function(){
+            var oC=document.getElementById('c1');
+
+            var gd=oC.getContext('2d');
+            var cx=250,
+                    cy=250;
+
+            function drawArc(start,end,r,color){
+                r=r|| 100;
+                color=color || '#000';
+                gd.beginPath();
+                gd.strokeStyle=color;
+                gd.lineWidth=20;
+                gd.arc(cx,cy,r,d2a(start-90),d2a(end-90),false);
+                gd.stroke();
+            }
+
+            function tick(){
+                gd.clearRect(0,0,oC.width,oC.height);
+
+                var oDate=new Date();
+                var h=oDate.getHours();
+                var m=oDate.getMinutes();
+                var s=oDate.getSeconds();
+                var ms=oDate.getMilliseconds();
+
+                drawArc(0,h%12*30+m/60*30,60,'#f00');
+                drawArc(0,m*6+s/60*6,80,'#ff0');
+                drawArc(0,s*6+ms/1000*6,100,'#0f0');
+
+                //画文字
+                var str=h+':'+m+':'+s;
+                gd.font='20px 黑体';
+                gd.textAlign='center';
+                gd.fillText(str,cx,cy);
+            }
+            tick();
+            setInterval(tick,30);
+        };
+    </script>
+</head>
+<body>
+    <canvas id="c1" width="500" height="500"></canvas>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

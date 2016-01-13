@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>拍照</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none
+        }
+        body{
+            background: #000;
+            text-align: center;
+			overflow:_hidden;
+        }
+        canvas{
+            background: #fff;
+        }
+		 .my-btn{
+            background:red;
+            display: inline-block;
+            padding: 10px 20px;
+            color: #eee;
+            font-size:20px;
+            text-shadow: 2px 2px 4px #000;
+            border-radius: 8px;
+            font-family: 黑体;
+            box-shadow: 0px 5px 3px #000;
+            cursor: pointer;
+            transition: .2s all ease;
+            position: relative;
+            top:0;
+			margin-bottom:20px;
+        }
+        .my-btn:hover{
+            box-shadow: 0px 5px 3px #000, inset 0 0 15px #666;
+        }
+        .my-btn:active{
+            top:3px;
+            box-shadow: 0px 2px 3px #000, inset 0 0 5px #666;
+        }
+    </style>
+    <script>
+        function d2a(n){
+            return n*Math.PI/180;
+        }
+        window.onload=function(){
+			document.onmousedown=function(){return false;}
+            var oC=document.getElementById('c1');
+            var gd=oC.getContext('2d');
+
+            var linear=gd.createLinearGradient(-200,-200,200,200);
+            linear.addColorStop(0,'#0ff');
+            linear.addColorStop(1,'#ff0');
+
+            gd.strokeStyle=linear;
+
+            var d=0;
+            setInterval(function(){
+                d++;
+                gd.save();
+                gd.translate(200,150);
+                gd.rotate(d2a(d));
+                gd.strokeRect(-100,-50,200,100);
+                gd.restore();
+            },16);
+
+            //拍一张
+            var oBtn=document.querySelector('#div1');
+			var oBox=document.getElementById('box');
+            oBtn.onclick=function(){
+                var oImg=new Image();
+
+                oImg.onload=function(){
+                    oBox.appendChild(this);
+                };
+
+                oImg.src=oC.toDataURL();
+            };
+        };
+    </script>
+</head>
+<body>
+<div class="my-btn m20 fl" id="div1">拍一张</div>
+<br/>
+    <canvas id="c1" width="400" height="400"></canvas>
+	<div id="box"></div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>影子</title>
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+        }
+        .sun{
+            width:100px;
+            height:100px;
+            background: url(sun.png) no-repeat;
+            background-size: cover;
+            position: absolute;
+            left: 0;
+            top: 0;
+            cursor: crosshair;
+            z-index: 10;
+        }
+        p{
+            font-size: 50px;
+            font-weight: bolder;
+            font-family: 微软雅黑;
+            width:300px;
+            position: absolute;
+            text-align: center;
+            left: 50%;
+            top: 50%;
+            margin-left:-150px;
+            margin-top: -25px;
+            text-shadow: 0 0 0 #000;
+            color: #f60;
+        }
+    </style>
+    <script>
+        window.onload=function(){
+            var oSun=document.querySelector('.sun');
+            var oP=document.querySelector('p');
+            document.onmousemove=function(ev){
+                var l=ev.clientX-oSun.offsetWidth/2;
+                var t=ev.clientY-oSun.offsetHeight/2;
+                oSun.style.left=l+'px';
+                oSun.style.top=t+'px';
+                //求距离
+                var x=oP.offsetLeft+oP.offsetWidth/2-ev.clientX;
+                var y=oP.offsetTop+oP.offsetHeight/2-ev.clientY;
+                var c=Math.sqrt(x*x+y*y);
+                oP.style.textShadow=x/5+'px '+y/5+'px '+c/40+'px rgba(0,0,0,'+(1-c/500)+')';
+            };
+        };
+    </script>
+</head>
+<body>
+    <div class="sun"></div>
+    <p>我是影子</p>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
